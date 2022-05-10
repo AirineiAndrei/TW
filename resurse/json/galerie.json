@@ -1,0 +1,86 @@
+{
+	"cale_galerie":"resurse/imagini/galerie",
+	"imagini": [
+		{
+			"fisier":"pic1.jpg",
+			"descriere":"Robotel",
+			"anotimp":"primavara"
+			
+		},
+        {
+			"fisier":"pic2.jpg",
+			"descriere":"Papusa Barbie",
+			"anotimp":"primavara"
+		},
+        {
+			"fisier":"pic3.jpg",
+			"descriere":"Minge de Plaja",
+			"anotimp":"primavara"
+		},
+        {
+			"fisier":"pic4.jpg",
+			"descriere":"Educationale",
+			"anotimp":"primavara"
+		},
+        {
+			"fisier":"pic5.jpg",
+			"descriere":"Lego",
+			"anotimp":"primavara"
+		},
+        {
+			"fisier":"pic6.jpg",
+			"descriere":"Ursulet",
+			"anotimp":"primavara"
+		},
+        {
+			"fisier":"pic7.jpg",
+			"descriere":"Jocuri Video",
+			"anotimp":"primavara"
+		},
+        {
+			"fisier":"pic8.jpg",
+			"descriere":"Masina de Pompieri",
+			"anotimp":"primavara"
+		},
+        {
+			"fisier":"pic9.jpg",
+			"descriere":"Plusuri",
+			"anotimp":"primavara"
+		},
+        {
+			"fisier":"pic10.jpg",
+			"descriere":"Kermit",
+			"anotimp":"primavara"
+		},
+        {
+			"fisier":"pic11.jpg",
+			"descriere":"Cub Rubic",
+			"anotimp":"primavara"
+		},
+        {
+			"fisier":"pic12.jpg",
+			"descriere":"Oita",
+			"anotimp":"primavara"
+		},
+        {
+			"fisier":"pic13.jpg",
+			"descriere":"Ursulet Dragut",
+			"anotimp":"primavara"
+		},
+		{
+			"fisier":"vara.jpg",
+			"descriere":"Este Vara",
+			"anotimp":"vara"
+		},
+		{
+			"fisier":"toamna.jpg",
+			"descriere":"Este Toamna",
+			"anotimp":"toamna"
+		},
+		{
+			"fisier":"iarna.jpg",
+			"descriere":"Este Iarna",
+			"anotimp":"iarna"
+		}
+	]
+}

@@ -1,0 +1,8 @@
+@use 'sass:list';
+@use 'sass:math';
+
+
+@use '../resurse/scss/galerie-animata-frag.scss' with(
+    $n: <%- locals.nrPoze  %>,
+    $totalImagini: <%- locals.totalPoze %>    
+);

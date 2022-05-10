@@ -1,0 +1,9 @@
+#Container{
+    display:unset;
+}
+html{
+    font-size:14px;
+}
+#Home{
+    display: none;
+}

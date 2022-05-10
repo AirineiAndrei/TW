@@ -1,0 +1,260 @@
+
+html{
+    --margine-main:20px;
+    --inaltime-buton:3rem;
+    --latime-buton:200px;
+    --background-color:#ADF3BA;
+    --buton-color:#64F47F;
+    --color-1:#5c8563;
+    --color-2:#94d4ff;
+    --grosime-border-tabel:2px;
+    font-size: 16px;
+}
+#tabel{
+    background-color: rgb(121, 184, 221);
+    caption-side: bottom;
+    /* border-collapse:collapse ; */
+}
+#contaioner-tabel{
+    overflow-x: scroll;
+}
+#table thead tr th{
+    border: var(--grosime-border-tabel)  solid var(--buton-color);
+}
+#tabel thead tr th{
+    border-bottom: calc(2 * var(--grosime-border-tabel)) solid black;
+}
+#tabel tfoot tr td{
+    border-top: calc(2 * var(--grosime-border-tabel)) solid black ;
+}
+#tabel td{
+    width: 250px;
+    height: 30px;
+}
+#tabel td:hover{
+    box-shadow: 0px 3px;
+    box-shadow: grey;
+    transition: linear;
+    transition-duration: 0.5s;
+}
+
+#tabel td{
+    border: var(--grosime-border-tabel) solid black;
+    text-align: center;
+    
+}
+#tabel *{
+    border: 0;
+    padding: 0;
+}
+
+#tabel tr :nth-child(odd){
+    border-right-color: var(--color-1);
+    border-left-color: var(--color-2);
+}
+#tabel tr :nth-child(even){
+    border-right-color: var(--color-2);
+    border-left-color: var(--color-1);
+}
+body{
+    background-color: var(--background-color);
+}
+video{
+    width: 70%;
+    height: auto;
+}
+main{
+    background-color: white;
+    margin-left: var(--margine-main);
+    margin-right: var(--margine-main);
+}
+footer{
+    margin-left: var(--margine-main);
+}
+section{
+    border: 1px solid black;
+    padding: 10px;
+}
+#Container>*{
+    margin: 5px;
+}
+#Container{
+    display: grid;
+    grid-template-areas:"z-despre z-despre z-despre"
+                        "z-oferte z-orar z-anunturi"
+                        "z-utilizatori z-orar z-anunturi"
+                        "z-utilizatori z-statistici z-server"
+                        "z-imagine z-imagine z-imagine"
+                        "z-recenzii z-recenzii z-recenzii";
+    grid-template-columns: 1fr 2fr 1fr;
+}
+#Despre{
+    grid-area: z-despre;
+}
+#Orar{
+    grid-area: z-orar;
+}
+#Oferte{
+    grid-area: z-oferte;
+}
+#Anunturi{
+    grid-area: z-anunturi;
+}
+#Imagine{
+    grid-area: z-imagine;
+}
+#Utilizatori{
+    grid-area: z-utilizatori;
+}
+#Recenzii{
+    grid-area: z-recenzii;
+}
+#Statistici{
+    grid-area: z-statistici;
+}
+#Server{
+    grid-area: z-server;
+}
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+h1{
+    text-align: center;
+	font-family: 'Dancing Script';
+    font-weight: bold;
+}
+::cue {
+    background: transparent;
+    text-shadow: 2px 2px black;
+}
+
+/* *******************up********************** */
+#Up{
+    margin: 1px;
+    width: 30px;
+    height: 25px;
+    position: fixed;
+    bottom:0;
+    left:0;
+    padding: 0;
+    border-left: 3px solid gray;
+    border-right: 3px solid gray;
+    border-radius: 50%;
+    opacity: 30%;
+
+}
+ #Up > div{
+    width: 0; 
+    height: 0; 
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+    border-bottom: 7px solid gray;
+    margin: 0;
+    position: absolute;
+    top: calc((100% - 8px)/2);
+    left: calc((100% - 14px)/2);
+ }
+
+@keyframes animatie_up {
+    100%{opacity: 100%;}
+}
+@keyframes animatie_up_triangle {
+    100%{
+        border-bottom: 7px solid var(--buton-color);
+        transform: translateY(-3px);
+    }
+}
+#Up:hover{
+    animation-name: animatie_up;
+    animation-timing-function: linear;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    transform-origin: 0 0;
+    animation-fill-mode: forwards;
+}
+#Up:hover > div{
+    animation-name: animatie_up_triangle;
+    animation-timing-function: linear;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    transform-origin: 0 0;
+    animation-fill-mode: forwards;
+}
+
+/***************** iframe menu **********************/
+
+
+iframe{
+    display: block;
+    position: relative;
+    border: 2px solid var(--buton-color);
+    float: left;
+    height: 40vw;
+    width: 70%;
+    
+}
+
+
+.taburi-iframe{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    float: left;
+    width: 30%;
+    margin: 0;
+    padding: 0;
+    
+}
+.taburi-iframe a{
+    display: block;
+    width: 20vw;
+    color: black;
+    text-align: center;
+    text-decoration: none;
+    height: var(--inaltime-buton);
+    background-color: var(--buton-color);
+    font-size: 1.2em;
+    border: 2px solid green;
+    border-top-right-radius: 20px;
+    border-bottom-right-radius: 20px;
+    line-height: var(--inaltime-buton);
+}
+
+@keyframes animatie-tab-iframe {
+    0%{background-color: var(--buton-color);
+        width: 20vw;}
+    100%{background-color: white;
+        width: 25vw;}
+}
+
+.taburi-iframe a:hover{
+    animation-name: animatie-tab-iframe;
+    animation-timing-function: linear;
+    animation-duration: 0.5s;
+    animation-iteration-count: 1;
+    transform-origin: 0 0;
+    animation-fill-mode: forwards;
+   
+}
+
+.taburi-iframe li{
+    list-style: none;
+}
+
+#Link-download{
+    position: relative;
+    top: 10px;
+    display: inline-block;
+    width: 31%;
+    background-color: greenyellow;
+    height: var(--inaltime-buton);
+    text-align: center;
+    line-height: var(--inaltime-buton);
+    
+}
+
+#banner,#watermark{
+    display: none;
+}

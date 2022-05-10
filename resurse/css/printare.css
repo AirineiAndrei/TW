@@ -1,0 +1,57 @@
+nav,iframe,img,#Up,video,figcaption{
+    display: none;
+}
+#Container{
+    display: unset;
+}
+section{
+    border: none;
+}
+@page  
+{ 
+    margin-left: 2.5cm;
+    margin-right: 0.5cm;
+} 
+
+td{
+    margin: var(--grosime-border-tabel) solid black;
+}
+*{
+    color: black;
+    margin: 0;
+}
+h1{
+    font-size: 2.5em;
+    page-break-after: always;
+    text-decoration: underline;
+}
+footer {
+    page-break-before: always;
+}
+body > *,footer{
+    padding-top: 50px;
+}
+#Utilizatori{
+    padding-top: 150px;
+}
+
+#banner{
+    display: unset;
+    position: fixed;
+    font-size: 40px;
+    width: 80%;
+    text-align: center;
+    top: 0;
+    border: 1px dotted black;
+}
+#watermark{
+    display: unset;
+    position: fixed;
+    font-size: 40px;
+    text-align: center;
+    top: 50%;
+    left: 100px;
+    opacity: 50%;
+    font-weight: bold;
+}
+

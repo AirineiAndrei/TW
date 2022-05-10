@@ -1,0 +1,26 @@
+{
+    "cale_baza" : "resurse/imagini/erori",
+    "erori":[
+        {
+            "identificator":404,
+            "status":true,
+            "titlu":"404 - Nu exista",
+            "text": "Citeste o carte",
+            "imagine":"lupa.jpg"
+        },
+        {
+            "identificator":403,
+            "status":true,
+            "titlu":"403 - Nu e voie",
+            "text": "De ce iti bagi nasul aici??",
+            "imagine":"politist.png"
+        },
+        {
+            "identificator":1,
+            "status":false,
+            "titlu":"Site in lucru",
+            "text": "Aia e",
+            "imagine":"semn.png"
+        }
+    ]
+}
