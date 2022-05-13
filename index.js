@@ -6,17 +6,17 @@ const {Client}=require("pg")
 const ejs = require('ejs')
 const sass = require('sass')
 
-var client = new Client({user:"andrei",password:"andrei",database:"proiect",host:"localhost",port: 5432});
-// var client = new Client({
-//     user:"foqwmwrurfrpwd",
-//     password:"33720b6c3c5954639ca15c7f642597147af1fb8e62ba63a45bf0427890aece96",
-//     database:"daurmuvnvjekb6",
-//     host:"ec2-54-172-175-251.compute-1.amazonaws.com",
-//     port: 5432,
-//     ssl: {
-//     rejectUnauthorized: false
-//   }
-// });
+// var client = new Client({user:"andrei",password:"andrei",database:"proiect",host:"localhost",port: 5432});
+var client = new Client({
+    user:"foqwmwrurfrpwd",
+    password:"33720b6c3c5954639ca15c7f642597147af1fb8e62ba63a45bf0427890aece96",
+    database:"daurmuvnvjekb6",
+    host:"ec2-54-172-175-251.compute-1.amazonaws.com",
+    port: 5432,
+    ssl: {
+    rejectUnauthorized: false
+  }
+});
  client.connect();
 
 app = express();
