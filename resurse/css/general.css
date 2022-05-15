@@ -3,19 +3,45 @@ html{
     --margine-main:20px;
     --inaltime-buton:3rem;
     --latime-buton:200px;
+   
+    --grosime-border-tabel:2px;
+    font-size: 16px;
+}
+body{
+    --background-main:white;
     --background-color:#ADF3BA;
     --buton-color:#64F47F;
     --color-1:#5c8563;
-    --color-2:#94d4ff;
-    --grosime-border-tabel:2px;
-    font-size: 16px;
+    --color-2:#c1e6ff;
+    --text-color: black;
+}
+body.dark{
+    --background-main:rgb(67, 67, 67);
+    --background-color:#223024;
+    --buton-color:#268b39;
+    --color-1:#2e4331;
+    --color-2:#0f3147;
+    --text-color: white;
+}
+body{
+    color: var(--text-color);
+}
+#btn_tema{
+    position: absolute;
+    right: 25px;
+    top: 25px;
+}
+#form_login{
+    position: absolute;
+    right: 200px;
+    top: 15px;
 }
 #tabel{
     background-color: rgb(121, 184, 221);
     caption-side: bottom;
     /* border-collapse:collapse ; */
 }
-#contaioner-tabel{
+#container-tabel{
     overflow-x: scroll;
 }
 #table thead tr th{
@@ -43,6 +69,12 @@ html{
     text-align: center;
     
 }
+
+#change_theme{
+    position: absolute;
+    right: 25px;
+    top: 25px;
+}
 #tabel *{
     border: 0;
     padding: 0;
@@ -64,7 +96,7 @@ video{
     height: auto;
 }
 main{
-    background-color: white;
+    background-color: var(--background-main);
     margin-left: var(--margine-main);
     margin-right: var(--margine-main);
 }
@@ -210,7 +242,7 @@ iframe{
 .taburi-iframe a{
     display: block;
     width: 20vw;
-    color: black;
+    color: var(--text-color);
     text-align: center;
     text-decoration: none;
     height: var(--inaltime-buton);

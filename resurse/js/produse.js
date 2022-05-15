@@ -1,4 +1,9 @@
 
+window.addEventListener("load",function(){
+    
+})
+
+
 
 //cod cos virtual
 function cost_virtual(){

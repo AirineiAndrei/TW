@@ -1,3 +1,12 @@
+<script>    
+    var tema = localStorage.getItem("tema");    
+    if(tema) 
+        document.body.classList.add("dark");
+    else
+        document.body.classList.remove("dark");
+</script>
+
+
 <header>
     <p id = "banner">Acesta este un Proiect scolar</p>
     <p id = "watermark">Airinei Andrei Cristan</p>
@@ -31,6 +40,41 @@
                     <li><a href="">Optiune5</a></li>
                 </ul>
             </li>
+
+            <li> <a href="/inregistrare">Inregistrare</a></li>
+
+
+            <% if(locals.utilizator){ %>
+            <li>
+                <a href=""> <%- locals.utilizator.username %></a>
+                <ul class="submeniu">
+                    <li><a href="/profil">Profil</a></li>
+                    <li><a href="/logout">Logout</a></li>
+                </ul>
+            </li>
+            <% } %>
          </ul>
     </nav>
+
+
+    <p id = "btn_tema"><button>Schimba tema</button></p>
+
+
+    <% if(!locals.utilizator) { %>
+    <form id="form_login"  method="post" class="date"  action="/login"  enctype="multipart/form-data">
+        <p>
+            <label>
+                Username: <input type="text" name="username" id="inp-username" value="prof<%= Math.floor(Math.random()*100000) %>" required pattern="[A-Za-z0-9]+">
+            </label>
+        </p>
+        <p> 
+            <label>
+                Parola: <input id="parl" type="password" required  name="parola" value="">
+            </label>
+        </p>
+        <p>		
+            <input type="submit" value="Login">
+        </p>
+    </form>
+    <% } %>
 </header>

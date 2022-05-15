@@ -72,7 +72,7 @@ ul.meniu li a {
   text-align: center;
   line-height: var(--inaltime-buton);
   font-size: 1.2em;
-  color: black; }
+  color: var(--text-color); }
 
 #hamburger {
   position: relative;
@@ -83,7 +83,7 @@ ul.meniu li a {
   text-align: center;
   line-height: var(--inaltime-buton);
   font-size: 1.2em;
-  color: black;
+  color: var(--text-color);
   text-align: left;
   padding: 0;
   display: none;
