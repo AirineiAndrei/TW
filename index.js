@@ -11,6 +11,15 @@ const crypto = require('crypto');
 const session = require('express-session');
 const nodemailer = require('nodemailer')
 
+const html_to_pdf = require('html-pdf-node');
+const juice=require('juice');
+const QRCode = require('qrcode');
+const { resourceUsage } = require("process");
+
+
+
+
+
 async function trimiteMail(email, subiect, mesajText, mesajHtml, atasamente=[]){
 	var transp= nodemailer.createTransport({
 		service: "gmail",
@@ -35,7 +44,20 @@ async function trimiteMail(email, subiect, mesajText, mesajHtml, atasamente=[]){
 	console.log("trimis mail");
 }
 
+
+const obGlobal = {
+    obImagini:null,
+    obErori:null,
+    emailServer:"airinei.tehnici.web@gmail.com",
+    port: 8080,
+    sirAlphaNum:"",
+    protocol: null,
+    numeDomeniu: null
+};
+
 if(process.env.SITE_ONLINE){
+    obGlobal.protocol = "https://";
+    obGlobal.numeDomeniu = "https://limitless-reef-59862.herokuapp.com";
 var client = new Client({
     user:"foqwmwrurfrpwd",
     password:"33720b6c3c5954639ca15c7f642597147af1fb8e62ba63a45bf0427890aece96",
@@ -48,21 +70,34 @@ var client = new Client({
 });
 }
 else{
+    obGlobal.protocol = "http://"
+    obGlobal.numeDomeniu = "localhost:8080";
     var client = new Client({user:"andrei",password:"andrei",database:"proiect",host:"localhost",port: 5432});
 }
 
 
 
 
-const obGlobal = {
-    obImagini:null,
-    obErori:null,
-    emailServer:"airinei.tehnici.web@gmail.com"
-};
+
+
+var v_interval = [[48,57],[65,90],[97,122]];
+for(let interval of v_interval){
+    for(let i = interval[0]; i <= interval[1];i++)
+        obGlobal.sirAlphaNum += String.fromCharCode(i);
+}
+
+function genereazaToken(n){
+    let token = "";
+    for(let i = 0;i<n;i++){
+        token += obGlobal.sirAlphaNum[Math.floor(Math.random() * obGlobal.sirAlphaNum.length)]
+    }
+    return token;
+}
 
 client.connect();
 
 app = express();
+app.use(["/produse_cos","/cumpara"],express.json({limit:'2mb'}));
 
 app.use(session({
     secret: 'abcdefg',
@@ -135,6 +170,25 @@ app.get("*/galerie-animata.css",function(req,res){
     }
 })
 
+//------------------------ cos virtual
+app.post("/produse_cos",function(req,res){
+    if(req.body.ids_prod.length != 0){
+        let querySelect = `select * from jucarii where id in (${req.body.ids_prod.join(",")})`;
+        client.query(querySelect,function(err,rezQuery){
+            if(err){
+                console.log(err);
+                res.send("Eroare Baza de date");
+            }
+            res.send(rezQuery.rows);
+        });
+    }
+    else{
+        res.send([]);
+    }
+}); 
+
+
+
 //--------------------------- utilizatori
 app.get("/logout",function(req,res){
     req.session.destroy();
@@ -148,8 +202,9 @@ app.post("/inreg" , function(req,res){
     var formular = new formidable.IncomingForm();
     formular.parse(req,function(err,campuriText,campuriFisier){
         var parolaCriptata = crypto.scryptSync(campuriText.parola,parolaServer,64).toString('hex');
-        var comandaInserare = `insert into utilizatori (username,nume,prenume,parola,email,culoare_chat) 
-                                values ('${campuriText.username}','${campuriText.nume}','${campuriText.prenume}','${parolaCriptata}','${campuriText.email}','${campuriText.culoare_chat}' )`;
+        var token = genereazaToken(100);
+        var comandaInserare = `insert into utilizatori (username,nume,prenume,parola,email,culoare_chat,cod) 
+                                values ('${campuriText.username}','${campuriText.nume}','${campuriText.prenume}','${parolaCriptata}','${campuriText.email}','${campuriText.culoare_chat}','${token}' )`;
         
         var eroare = "";
         if(campuriText.username == ""){
@@ -174,7 +229,10 @@ app.post("/inreg" , function(req,res){
                         }
                         else{
                             res.render("pagini/inregistrare", {raspuns : "Datele au fost introduse"});
-                            trimiteMail(campuriText.email,"Te-ai inregistrat","text",`<h1>Salut!</h1><p style='color:blue'>Username-ul tau este ${campuriText.username}.</p>`);
+                            let linkConfirmare = obGlobal.protocol + obGlobal.numeDomeniu + "/cod/" + token;
+                            trimiteMail(campuriText.email,"Te-ai inregistrat","text",`<h1>Salut!</h1>
+                                                            <p style='color:blue'>Username-ul tau este ${campuriText.username}.</p>
+                                                            <a href = '${linkConfirmare}'>Confirma Mail</a>`);
                         }
                     }); 
                 }
@@ -190,7 +248,7 @@ app.post("/login", function(req,res){
     var formular = new formidable.IncomingForm();
     formular.parse(req,function(err,campuriText,campuriFisier){
         var parolaCriptata = crypto.scryptSync(campuriText.parola,parolaServer,64).toString('hex');
-        var querySelect = `select * from utilizatori where username = '${campuriText.username}' and parola = '${parolaCriptata}'`;
+        var querySelect = `select * from utilizatori where username = '${campuriText.username}' and parola = '${parolaCriptata}' and confirmat_mail = true`;
         client.query(querySelect,function(err,rezSelect){
             // console.log("\n\n\nIncerc Logare\n\n\n")
             if(err)
@@ -206,6 +264,9 @@ app.post("/login", function(req,res){
                         culoare_chat: rezSelect.rows[0].culoare_chat    
                     }
                     res.redirect("/index")
+                }
+                else{
+                    randeazaEroare(res,-1,"Login esuat","Mail neconfirmat sau parola gresita",null);
                 }
             }
         });
@@ -312,8 +373,7 @@ function randeazaEroare(res,identificator,titlu,text,imagine){
 }
 creeazaErori();
 
-var s_port=process.env.PORT || 8080;
+var s_port=process.env.PORT || obGlobal.port;
 app.listen(s_port);
 
-// app.listen(8080);
 console.log("A pornit!");
