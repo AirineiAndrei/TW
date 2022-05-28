@@ -1,4 +1,4 @@
-nav,iframe,img,#Up,video,figcaption{
+nav,iframe,img,#Up,video,figcaption,#form_login,#btn_tema,#galerie-animata{
     display: none;
 }
 #Container{
@@ -9,9 +9,11 @@ section{
 }
 @page  
 { 
-    margin-left: 2.5cm;
-    margin-right: 0.5cm;
+   margin-left: 2.5cm;
+   margin-right: 0.5cm;
+   margin-top: 30000cm;
 } 
+
 
 td{
     margin: var(--grosime-border-tabel) solid black;
@@ -19,6 +21,7 @@ td{
 *{
     color: black;
     margin: 0;
+    border: 0;    
 }
 h1{
     font-size: 2.5em;
@@ -28,12 +31,13 @@ h1{
 footer {
     page-break-before: always;
 }
+
 body > *,footer{
     padding-top: 50px;
 }
-#Utilizatori{
+/* #Utilizatori{
     padding-top: 150px;
-}
+} */
 
 #banner{
     display: unset;
@@ -41,8 +45,9 @@ body > *,footer{
     font-size: 40px;
     width: 80%;
     text-align: center;
-    top: 0;
+    top: 0px;
     border: 1px dotted black;
+    /* overflow:  hidden; */
 }
 #watermark{
     display: unset;

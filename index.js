@@ -52,7 +52,8 @@ const obGlobal = {
     port: 8080,
     sirAlphaNum:"",
     protocol: null,
-    numeDomeniu: null
+    numeDomeniu: null,
+    optiuniMeniu: null
 };
 
 if(process.env.SITE_ONLINE){
@@ -94,6 +95,7 @@ function genereazaToken(n){
     return token;
 }
 
+
 client.connect();
 
 app = express();
@@ -107,8 +109,11 @@ app.use(session({
 
 app.use("/resurse",express.static(__dirname+"/resurse"));
 
+
+
+
 app.use("/*",function(req,res,next){
-    res.locals.utilizator = req.session.utilizator;
+    res.locals.utilizator = req.session.utilizator;  
     next();
 });
 
@@ -120,20 +125,49 @@ app.get(["/","/index","/home"],function(req,res){
 })
 
 app.get("/produse",function(req,res){
-    client.query("select * from jucarii",function(err,rezQuery){
-        if(!err)
-            res.render("pagini/produse",{produse : rezQuery.rows});
-        else
-            console.log("Eroare query\n",err);
+
+
+    client.query("select min(pret) from jucarii" , function(err,rezultatMin){
+        res.locals.pretMinim = parseInt(rezultatMin.rows[0].min);
     })
+    client.query("select max(pret) from jucarii" , function(err,rezultatMax){
+        res.locals.pretMaxim = parseInt(rezultatMax.rows[0].max);
+    })
+
+    client.query("select min(dimensiune) from jucarii" , function(err,rezultatMin){
+        res.locals.dimMinim = parseInt(rezultatMin.rows[0].min);
+    })
+    client.query("select max(dimensiune) from jucarii" , function(err,rezultatMax){
+        res.locals.dimMaxim = parseInt(rezultatMax.rows[0].max);
+    })
+
+    client.query("select distinct (culoare) from jucarii",function(err,rezCulori){
+        res.locals.culori = rezCulori.rows;
+    })
+
+    client.query("select * from unnest(enum_range(null::categ_jucarie))",function(err,rezCateg){
+        res.locals.categorii = rezCateg.rows;
+    })
+
+    client.query("select * from unnest(enum_range(null::grupa_varsta))", function(err, rezCateg){
+        var cond_where=req.query.tip ? ` grupa_varsta='${req.query.tip}'` : " 1=1";
+
+        client.query("select * from jucarii where" + cond_where,function(err,rezQuery){
+            if(!err)
+                res.render("pagini/produse",{produse : rezQuery.rows,optiuniMeniu : rezCateg.rows});
+            else
+                console.log("Eroare query\n",err);
+        })
+    });
 })
 
 app.get("/produs/:id",function(req,res){
     console.log(req.params);
     client.query(`select * from jucarii where id=${req.params.id}`,function(err,rezQuery){
         // console.log(rezQuery);
-        if(!err)
+        if(!err){
             res.render("pagini/produs",{prod : rezQuery.rows[0]});
+        }
         else
             console.log("Eroare produs\n",err);
     })
@@ -366,13 +400,13 @@ function randeazaEroare(res,identificator,titlu,text,imagine){
     titlu = titlu || (eroare && eroare.titlu) || "Titlu custom eroare";
     text = text || (eroare && eroare.text) || "Text custom eroare";
     imagine = imagine || (eroare && obGlobal.obErori.cale_baza+'/'+eroare.imagine) || "/resurse/imagini/erori/semn.png";
+    console.log(imagine)
     if(eroare && eroare.status)
         res.status(eroare.identificator).render("pagini/eroare_generala",{titlu: titlu,text: text,imagine: imagine});
     else
         res.render("pagini/eroare_generala",{titlu: titlu,text: text,imagine: imagine});
 }
 creeazaErori();
-
 var s_port=process.env.PORT || obGlobal.port;
 app.listen(s_port);
 

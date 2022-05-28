@@ -9,11 +9,11 @@
 
 <header>
     <p id = "banner">Acesta este un Proiect scolar</p>
-    <p id = "watermark">Airinei Andrei Cristan</p>
+    <p id = "watermark">Airinei Andrei Cristian</p>
     <h1>Magazin de jucarii</h1>
     <nav>
         <label id = "hamburger" for="ch-menu">
-            <img src = "./resurse/imagini/Hamburger_icon_alb.png" alt = "Menu"> 
+            <img src = "/resurse/imagini/Hamburger_icon_alb.png" alt = "Menu"> 
         </label>
         <input id = "ch-menu" type="checkbox" >
          <ul class="meniu">
@@ -28,7 +28,14 @@
                 </ul>    
             </li>
                 <li><a href="/index#Oferte" >Oferte</a></li> 
-                <li><a href="/produse" >Produse</a></li> 
+                <li>
+                    <a href="/produse" >Produse</a>
+                    <ul class = "submeniu">
+                        <% if(locals.optiuniMeniu) for(let op of locals.optiuniMeniu){ %>
+                            <li><a href = "produse?tip=<%-op.unnest%>"> <%- op.unnest %> </a></li>
+                        <% } %>
+                    </ul>
+                </li> 
                 <li><a href="/index#Recenzii">Recenzii</a></li>
             <li>
                 <a href="">Optiuni multe</a>

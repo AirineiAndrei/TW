@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html  lang="ro">
     <head>
-        <!-- <meta name="description" content="Cofetaria Dulcelind ofera prajituri, torturi, produse de patiserie cu optiunea de achizitie online si livrare prin curier.">
-        <meta name="keywords" content="cofetarie, Dulcelind, prajituri, torturi, dulce, pateuri, produse"> -->
+        <meta name="description" content="Magazin de jucarii - produse">
+        <meta name="keywords" content="jucari,copii,magazin,exterior">
         <link rel="stylesheet" href="/resurse/css/produse.css" type="text/css" />
         <title>Magazin de Jucarii - produse</title>
 
@@ -15,25 +15,52 @@
     <%- include("../fragmente/header") %>
 
     <main>
+        <br>
         <label> Nume: <input type="text" id="inp-nume"></label>
-        <!--<label> Maxim calorii: <input type="number" id="inp-calorii" value="10000"></label>-->
-        <div> Calorii:<!-- trebuie sa aiba acelasi name ca sa formeze un grup -->
-            <p><label>Usor (greutate &lt; 20)
-                <input id="i_rad1"  name="gr_rad" value="0:20" type="radio"/>
-            </label></p>
-            <p><label>Mediu (20 &le; greutate &lt; 50)
-                <input id="i_rad2"  name="gr_rad" value="20:50" type="radio"/>
+        <br> <br>
+
+
+        <label> Pret minim: <span id = "minRange"><%-locals.pretMinim %></span>  <input type="range" id="inp-pret" value="0" min="<%-locals.pretMinim %>"  max="<%-locals.pretMaxim %>"> <span id = "maxRange"><%-locals.pretMaxim %></span> <span id="infoRangePret">(0)</span></label>
+        <br>
+        <label> Dimensiune minima: <span id = "minRange"><%-locals.dimMinim %></span>  <input type="range" id="inp-dim" value="0" min="<%-locals.dimMinim %>"  max="<%-locals.dimMaxim %>" step = "5"> <span id = "maxRange"><%-locals.dimMaxim %></span> <span id="infoRangeDim">(0)</span></label>
+
+
+        <br> <br>
+        <div> Parti mici:
+            <label>Da
+                <input id="i_rad1"  name="gr_rad" value="true" type="radio"/>
             </label>
-            <p><label>Greu (50 &le; greutate)
-                <input id="i_rad3" name="gr_rad" value="50:1000000000" type="radio"/>
+
+            <label>Nu
+                <input id="i_rad2"  name="gr_rad" value="false" type="radio"/>
             </label>
-            <p><label>Toate
-                <input id="i_rad4" checked name="gr_rad" value="toate" type="radio"/>
+           
+            <label>Toate
+                <input id="i_rad3" checked name="gr_rad" value="toate" type="radio"/>
             </label>
         </div>
 
+        <p>
+            <label for="datalist-culori">Choose a flavor:</label>
+            <input list="culori" id="inp-culori" name="alege-culori" />
 
-        <label> Pret minim: <input type="range" id="inp-pret" value="0" min="0"  max="70"> <span id="infoRange">(0)</span></label>
+            <datalist id="culori">
+                <% for(let col of locals.culori) { %>
+                    <option value="<%-col.culoare%>"></option>
+                <% } %>
+                <option value="orice">
+            </datalist>
+        </p>
+        
+        <p>
+            <label for="categorie">Alege categoria:</label>
+            <select multiple name="categoria" id="inp-categorie">
+                <option value="orice" selected>orice</option>
+                <% for(let categ of locals.categorii) {%>
+                    <option value="<%-categ.unnest %>"><%-categ.unnest %></option>
+                <% } %>    
+            </select>
+        </p>
 
         <p>
         <button id="filtrare">Filtreaza</button> <button id="resetare">Reseteaza</button><br/>
@@ -54,6 +81,7 @@
                             <p class="pret">Pret: <span class="val-pret"><%- prod.pret%></span></p>
                             <p class="dimensiune">Dimensiune: <span class="val-dimensiune"><%- prod.dimensiune%></span></p>
                             <p class="culoare">Culoare: <span class="val-culoare"><%- prod.culoare%></span></p>
+                            <p class="partiMici">Parti mici: <span class="val-partimici"><%- prod.parti_mici ? "Da" : "Nu"%></span></p>
                         </div>
                         <p class="categorie">Categorie:<span class="val-categorie"><%- prod.categorie%></span></p>
                         <figure>
